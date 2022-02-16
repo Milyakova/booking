@@ -1,0 +1,55 @@
+[ {
+  "_id": "67rdca3eeb7f6fgeed471198",
+  "name": "Телевизор",
+  "color": "primary"
+},
+   {
+  "_id": "67rdca3eeb7f6fgeed471100",
+  "name": "Кондиционер",
+  "color": "secondary"
+},
+   {
+  "_id": "67rdca3eeb7f6fgeed4711012",
+  "name": "Собственная ванная комната",
+  "color": "success"
+},
+   {
+  "_id": "67rdca3eeb7f6fgeed471101",
+  "name": "Сауна",
+  "color": "danger"
+},
+   {
+  "_id": "67rdca3eeb7f6fgeed471102",
+  "name": "Вид из окна",
+  "color": "info"
+},
+  {
+  "_id": "67rdca3eeb7f6fgeed471103",
+  "name": "Бесплатный Wi-Fi",
+  "color": "dark"
+},
+   {
+  "_id": "67rdca3eeb7f6fgeed471187",
+  "name": "Удобства на этаже",
+  "color": "dark"
+},
+   {
+  "_id": "67rdca3eeb7f6fgeed471546",
+  "name": "Баня",
+  "color": "sucсess"
+},
+  {
+  "_id": "67rdca3eeb7f6fgeed471734",
+  "name": "Камин",
+  "color": "secondary"
+},
+  {
+  "_id": "67rdca3eeb7f6fgeed471798",
+  "name": "Хвойная бочка",
+  "color": "primary"
+},
+   {
+  "_id": "67rdca3eeb7f6fgeed471831",
+  "name": "Гриль",
+  "color": "danger"
+}]
