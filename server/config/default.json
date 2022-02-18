@@ -1,4 +1,6 @@
 {
   "port": 8080,
-  "mongoUri": "mongodb+srv://vespers:vcZN6luH2tGozT4R@cluster0.3w8ce.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+  "mongoUri": "mongodb+srv://vespers:vcZN6luH2tGozT4R@cluster0.3w8ce.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "accessSecret": "super secret from backend",
+  "refreshSecret": "super refresh key"
 }
