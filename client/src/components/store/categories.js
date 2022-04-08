@@ -46,7 +46,7 @@ export const loadCategoriesList = () => async (dispatch, getState) => {
 export const getCategories = () => (state) => state.categories.entities;
 export const getCategoriesLoadingStatus = () => (state) =>
   state.categories.isLoading;
-export const getCategorybyId = (id) => (state) => {
+export const getCategoryById = (id) => (state) => {
   if (state.categories.entities) {
     return state.categories.entities.find((c) => c._id === id);
   }

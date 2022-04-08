@@ -1,18 +1,25 @@
 import httpService from "./http.service";
-import localStorageService from "./localStorage.service";
 
 const roomEndpoint = "room/";
 
 const roomService = {
-  get: async () => {
+  getRooms: async () => {
     const { data } = await httpService.get(roomEndpoint);
     return data;
   },
-  update: async (payload) => {
+  createRoom: async (payload) => {
+    const { data } = await httpService.post(roomEndpoint, payload);
+    return data;
+  },
+  updateRoom: async (payload) => {
     const { data } = await httpService.patch(
-      roomEndpoint + localStorageService.getroomId(),
+      roomEndpoint +  payload._id,
       payload
     );
+    return data;
+  },
+  removeRoom: async (roomId) => {
+    const { data } = await httpService.delete(roomEndpoint + roomId);
     return data;
   },
 };

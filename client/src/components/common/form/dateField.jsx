@@ -9,7 +9,8 @@ const DateField = ({ label, type, name, value, onChange, error, min }) => {
     onChange({ name: target.name, value: target.value });
   };
   return (
-    <div className="form-floating col-md-2">
+    // <div className="form-floating col-md-2">
+      <div className="col-auto">
       <input
         className={getInputClasses()}
         label={label}

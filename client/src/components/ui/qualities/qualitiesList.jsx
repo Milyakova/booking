@@ -14,7 +14,7 @@ const QualitiesList = ({ ids }) => {
     return (
       <>
         {qualsArray.map((qual) => (
-          <span key={qual._id} className={"badge bg-" + qual.color}>
+          <span key={qual._id} className={"m-2 badge bg-" + qual.color}>
             {qual.name}
           </span>
         ))}

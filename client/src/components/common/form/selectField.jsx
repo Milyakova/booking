@@ -35,13 +35,13 @@ const SelectField = ({
         onChange={handleChange}
         name={name}
       >
-        <option selected={value === ""} disabled value="">
+        <option disabled value="">
           {defaultOption}
         </option>
-        {options &&
+        {optionsArray &&
           optionsArray.map((option) => (
-            <option value={option._id} key={option._id}>
-              {option.name}
+            <option value={option.value} key={option.value}>
+              {option.label}
             </option>
           ))}
       </select>

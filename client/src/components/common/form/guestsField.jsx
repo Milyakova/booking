@@ -8,7 +8,7 @@ const GuestsField = ({ name, value = "2", onChange, label, error }) => {
     return "form-control " + (error ? "is-invalid" : "");
   };
   return (
-    <div className="form-floating col-md-2">
+    <div className="col-auto">
       <input
         className={getInputClasses()}
         label={label}

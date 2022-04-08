@@ -1,7 +1,5 @@
 import { createSlice, createAction } from "@reduxjs/toolkit";
 import bookingService from "../../services/booking.service";
-import { nanoid } from "nanoid";
-import { getCurrentUserId } from "./users";
 
 const bookingsSlice = createSlice({
   name: "bookings",
@@ -55,20 +53,30 @@ export const loadBookingsListForRoom = (roomId) => async (dispatch) => {
 
 export const createBooking = (payload) => async (dispatch, getState) => {
   dispatch(addBookingRequested());
-  const booking = {
-    ...payload, //даты
-    _id: nanoid(),
-    created_at: Date.now(),
-    userId: getCurrentUserId()(getState()),
-  };
+  // const booking = {
+  //   ...payload, //даты
+  //   _id: nanoid(),
+  //   created_at: Date.now(),
+  //   // userId: getCurrentUserId()(getState()),
+  // };
 
   try {
-    const { content } = await bookingService.createBooking(booking);
+    const { content } = await bookingService.createBooking(payload);
     dispatch(bookingCreated(content));
   } catch (error) {
     dispatch(bookingsRequestFailed(error.message));
   }
 };
+// export const checkRoomForBooking=(roomId, dateIn,dateOut)=>{
+//   const roomBookings=getBookings()
+//   // const roomBookings=loadBookingsListForRoom(roomId)
+//   console.log('roomBookings ', roomBookings)
+//   return roomBookings?.every(
+//             (booking) =>
+//             Date.parse(booking.checkin) >= Date.parse(dateOut) ||
+//             Date.parse(booking.checkout) <= Date.parse(dateIn)
+//           )
+// }
 
 export const removeBooking = (bookingId) => async (dispatch) => {
   dispatch(removeBookingRequested());
@@ -83,6 +91,7 @@ export const removeBooking = (bookingId) => async (dispatch) => {
 };
 
 export const getBookings = () => (state) => state.bookings.entities;
+export const getBookingsForRoom=()=>(state)=>state.bookings.entities
 export const getBookingsLoadingStatus = () => (state) =>
   state.bookings.isLoading;
 
