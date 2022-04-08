@@ -4,6 +4,8 @@ import { validator } from "../../utils/validator";
 import GuestsField from "../common/form/guestsField";
 import DateField from "../common/form/dateField";
 import RoomsListPage from "../pages/roomsListPage/roomsListPage";
+import history from "../../utils/history";
+
 const DatesForm = () => {
   const [data, setData] = useState({
     checkin: moment().format("YYYY-MM-DD"),
@@ -44,14 +46,13 @@ const DatesForm = () => {
   const isValid = Object.keys(errors).length === 0;
 
   const handleSubmit = (e) => {
-    console.log("HANDLE SUBMIT");
     e.preventDefault();
     const isValid = validate();
-    console.log("isvalid?????  ", isValid);
     if (!isValid) return;
-    console.log("JSON.stringify(data)", JSON.stringify(data));
     localStorage.setItem("rooms_search", JSON.stringify(data));
+    history.push("/rooms")
   };
+
 
   return (
     <>
@@ -98,10 +99,7 @@ const DatesForm = () => {
           </div>
         </div>
       </form>
-
-      {localStorage.getItem("rooms_search") ? <RoomsListPage /> : ""}
     </>
-  );
-};
+  )}
 
-export default DatesForm;
+export default DatesForm

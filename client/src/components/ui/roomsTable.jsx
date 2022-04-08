@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import BookMark from "../common/bookmark";
-import Qualities from "./qualities";
+import QualitiesList from "./qualities";
 import { Link } from "react-router-dom";
 import Table from "../common/table";
+import Category from "./category";
 
 const RoomsTable = ({
   rooms,
@@ -16,9 +17,9 @@ const RoomsTable = ({
     count: {},
     photo: {
       component: (room) => (
-        <Link to={`/rooms/${room._id}`}>
-          <img className="room-img" src={room.photo} />
-        </Link>
+          <Link to={`/rooms/${room._id}`}>
+            <img className="room-img" src={room.photo}/>
+          </Link>
       ),
     },
     name: {
@@ -26,29 +27,26 @@ const RoomsTable = ({
       name: "Имя",
       component: (room) => <Link to={`/rooms/${room._id}`}>{room.name}</Link>,
     },
-    number: { path: "number", name: "Number" },
+    number: {path: "number", name: "Number"},
     qualities: {
       name: "Качества",
-      component: (room) => <Qualities qualities={room.qualities} />,
+      component: (room) => <QualitiesList ids={room.qualities}/>,
     },
-    category: { path: "category.name", name: "Категория" },
-    guests_count: { path: "guests_count", name: "Количество гостей" },
+    category: {
+      name: "Категория",
+      component: (room) => <Category id={room.category}/>
+    },
+    guests_count: {path: "guests_count", name: "Количество гостей"},
     guests_additionally: {
       path: "guests_additionally",
       name: "Дополнительное размещение",
     },
-    rate: { path: "rate", name: "Оценка" },
-    bookmark: {
-      path: "bookmark",
-      name: "Избранное",
-      component: (room) => (
-        <BookMark
-          status={room.bookmark}
-          onClick={() => onToggleBookmark(room._id, room.bookmark)}
-        />
-      ),
-    },
-  };
+    rate: {path: "rate", name: "Оценка"},
+    booking: {
+      name: "Бронь",
+      component: (room) => <Link to={`/rooms/${room._id}`}>Забронировать</Link>
+    }
+  }
   return (
     //
     //   <Table
@@ -75,5 +73,5 @@ RoomsTable.propTypes = {
   handleSort: PropTypes.func,
   selectedSort: PropTypes.object,
   onSort: PropTypes.func.isRequired,
-  onToggleBookmark: PropTypes.func.isRequired,
+  onToggleBookmark: PropTypes.func,
 };

@@ -3,87 +3,50 @@ import Pagination from "../../common/pagination";
 import { paginate } from "../../../utils/paginate";
 import GroupList from "../../common/groupList";
 import PropTypes from "prop-types";
-import RoomPage from "../roomPage";
 import RoomsTable from "../../ui/roomsTable";
-import API from "../../../API";
+import DatesForm from "../../ui/datesForm"
 import _ from "lodash";
-import { useParams } from "react-router";
 import Loader from "../../../utils/loader";
 import Search from "../../common/form/search";
+import {getCategories,
+  getCategoriesLoadingStatus
+} from "../../store/categories";
+import { useSelector } from "react-redux";
+import {getRoomsList } from "../../store/rooms";
+
 
 const RoomsListPage = () => {
-  const params = useParams();
-  const { roomId } = params;
+  const rooms=useSelector(getRoomsList());
+  const categories=useSelector(getCategories());
+  const categoriesLoading=useSelector(getCategoriesLoadingStatus())
 
-  const [categories, setCategories] = useState();
   const [selectedCategory, setSelectedCategory] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const [rooms, setRooms] = useState();
-  const pageSize = 4;
-  const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
-  const [searchingName, setSearchingName] = useState({ value: "" });
-  let roomsForBooking = [];
+  const pageSize = 5;
+  const [sortBy, setSortBy] = useState({ path: "price", order: "asc" });
+  const [searchingName, setSearchingName] = useState( "" );
 
-  useEffect(() => {
-    console.log("send request rooms", API.rooms);
-    API.rooms.fetchAll().then((data) => {
-      console.log("DATA", data);
-      if (localStorage.getItem("rooms_search")) {
-        const roomsSearch = JSON.parse(localStorage.getItem("rooms_search"));
-        console.log("ROOMS SEARCH ", roomsSearch);
-        console.log(Date.parse(roomsSearch.checkin));
-        let filteredRoomsByCount = data.filter(
-          (room) =>
-            Number(room.guests_count) + Number(room.guests_additionally) >=
-            roomsSearch.count
-        );
-        roomsForBooking = filteredRoomsByCount.filter((room) =>
-          room.bookings?.every(
-            (booking) =>
-              Date.parse(booking.checkin) >= Date.parse(roomsSearch.checkout) ||
-              Date.parse(booking.checkout) <= Date.parse(roomsSearch.checkin)
-          )
-        );
-        setRooms(roomsForBooking);
-      } else {
-        setRooms(data);
+  let roomsCrop=[]
+
+  const handleToggleBookMark = (id) => {
+    const newArray = rooms.map((room) => {
+      if (room._id === id) {
+        return { ...room, bookmark: !room.bookmark };
       }
+      return room;
     });
-  }, []);
-
-  useEffect(() => {
-    API.categories.fetchAll().then((dataa) => {
-      setCategories(dataa);
-    });
-  }, []);
-  const handleDelete = (roomId) => {
-    const updatedRooms = rooms.filter((item) => item._id !== roomId);
-    setRooms(updatedRooms);
   };
-  const handleToggleBookmark = (roomId, status) => {
-    if (!status || status === undefined) {
-      status = true;
-    } else {
-      status = false;
-    }
-    const updatedBookmark = rooms.map((item) => {
-      if (item._id === roomId) {
-        item.bookmark = status;
-      }
-      return item;
-    });
-
-    setRooms(updatedBookmark);
-  };
-
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedCategory]);
-
-  const handleItemSelect = (item) => {
+  }, [selectedCategory,searchingName]);
+  const handleCategorySelect = (item) => {
+    if (searchingName !== "") setSearchingName("");
     setSelectedCategory(item);
   };
-
+  const handleSearchChange = ({ target }) => {
+    setSelectedCategory(undefined);
+    setSearchingName(target.value);
+  };
   const handlePageChange = (pageIndex) => {
     setCurrentPage(pageIndex);
   };
@@ -91,89 +54,105 @@ const RoomsListPage = () => {
     setSortBy(item);
   };
 
-  if (rooms) {
-    let filteredRooms = [];
-    if (selectedCategory) {
-      filteredRooms = rooms.filter(
-        (room) =>
-          JSON.stringify(room.category) === JSON.stringify(selectedCategory)
-      );
-    } else {
-      filteredRooms = rooms;
-    }
+  function filterRooms(data) {
+    return  searchingName
+        ? data.filter(
+            (room) =>
+                room.name
+                    .toLowerCase()
+                    .indexOf(searchingName.toLowerCase()) !== -1
+        )
+        : selectedCategory
+            ? data.filter((room) => room.category === selectedCategory._id)
+            : data;
+  }
 
-    if (searchingName.value) {
-      filteredRooms = rooms.filter((room) => {
-        const r = searchingName.value;
-        const regEx = new RegExp(r, "gi");
-        return regEx.test(JSON.stringify(room.name));
-      });
-    }
+  const filteredRooms=filterRooms(rooms)
+  const count = filteredRooms.length
+  roomsCrop=paginate(filterRooms(rooms),currentPage,pageSize)
 
-    const count = filteredRooms.length;
-    const sortedRooms = _.orderBy(filteredRooms, [sortBy.path], [sortBy.order]);
-    const roomsCrop = paginate(sortedRooms, currentPage, pageSize);
+  // if (rooms&&localStorage.getItem("rooms_search")) {
+  //   const roomsSearch = JSON.parse(localStorage.getItem("rooms_search"));
+  //   let filteredRoomsByCount = rooms?.filter(
+  //         (room) =>
+  //           Number(room.guests_count) + Number(room.guests_additionally) >=
+  //           roomsSearch.count
+  //         );
+  //   const roomsForBooking = filteredRoomsByCount.filter((room) =>
+  //       room.bookings?.every(
+  //           (booking) =>
+  //           Date.parse(booking.checkin) >= Date.parse(roomsSearch.checkout) ||
+  //           Date.parse(booking.checkout) <= Date.parse(roomsSearch.checkin)
+  //         )
+  //       );
+  //   // roomsCrop=paginate(filterRooms(roomsForBooking),currentPage,pageSize)
+  //   filteredRooms=filterRooms(roomsForBooking)
+  //
+  // } else {
+  //   const filteredRooms=filterRooms(rooms)
+  //   // roomsCrop=paginate(filterRooms(rooms),currentPage,pageSize)
+  // }
 
-    const clearFilter = () => {
-      setSelectedCategory(undefined);
-    };
 
-    const handleSearchChange = ({ target }) => {
-      setSearchingName((prevState) => ({ ...prevState, value: target.value }));
-      setSelectedCategory(undefined);
-      console.log("handleSearchChange", searchingName);
-    };
-    return (
+
+  // const count = roomsCrop.length;
+  const clearFilter = () => {
+    setSelectedCategory();
+  };
+
+  return (rooms?
       <>
-        {roomId && <RoomPage roomId={roomId} />}
-        {!roomId && (
-          <div className="d-flex">
-            {categories && (
-              <div className="d-flex-flex-column flex-shrink-0 p-3">
-                <GroupList
+        <DatesForm/>
+        {localStorage.getItem("rooms_search")&&<h3>Свободные номера на ваши даты </h3>}
+      <div className="d-flex">
+
+        {categories && !categoriesLoading && (
+            <div className="d-flex flex-column flex-shrink-0 p-3">
+              <GroupList
                   items={categories}
-                  onItemSelect={handleItemSelect}
+                  onItemSelect={handleCategorySelect}
                   selectedItem={selectedCategory}
-                />
-                <button className="btn btn-secondary mt2" onClick={clearFilter}>
-                  Очистить все
-                </button>
-              </div>
-            )}
-            <div className="d-flex flex-column">
-              <form>
-                <Search
-                  value={searchingName.value}
-                  onChange={handleSearchChange}
-                />
-              </form>
-              {count > 0 && (
-                <RoomsTable
+              />
+              <button
+                  className="btn btn-secondary mt-2"
+                  onClick={clearFilter}
+              >
+                Очистить
+              </button>
+            </div>
+        )}
+        <div className="d-flex flex-column">
+          {/*<Search length={count} />*/}
+
+          <input
+              type="text"
+              name="searchingName"
+              placeholder="Search..."
+              onChange={handleSearchChange}
+              value={searchingName}
+          />
+          {count > 0 && (
+              <RoomsTable
                   rooms={roomsCrop}
                   onSort={handleSort}
                   selectedSort={sortBy}
-                  onDelete={handleDelete}
-                  onToggleBookmark={handleToggleBookmark}
-                />
-              )}
-
-              <div className="d-flex justify-content-center">
-                <Pagination
-                  currentPage={currentPage}
-                  itemsCount={count}
-                  pageSize={4}
-                  onPageChange={handlePageChange}
-                />
-              </div>
-            </div>
+                  onToggleBookMark={handleToggleBookMark}
+              />
+          )}
+          <div className="d-flex justify-content-center">
+            <Pagination
+                itemsCount={count}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+            />
           </div>
-        )}
-      </>
-    );
-  }
-
-  return <Loader />;
+        </div>
+      </div>
+      </>:<Loader/>
+  );
 };
+
 
 RoomsListPage.propTypes = {
   rooms: PropTypes.array,

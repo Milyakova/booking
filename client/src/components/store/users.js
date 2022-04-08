@@ -3,17 +3,18 @@ import authService from "../../services/auth.service";
 import localStorageService from "../../services/localStorage.service";
 import userService from "../../services/user.service";
 import { generetaAuthError } from "../../utils/generateAuthError";
-import getRandomInt from "../../utils/getRandomInt";
 import history from "../../utils/history";
+import jwt_decode from "jwt-decode";
 
 const initialState = localStorageService.getAccessToken()
   ? {
       entities: null,
       isLoading: true,
       error: null,
-      auth: { userId: localStorageService.getUserId() },
+      auth: { ...JSON.parse(localStorageService.getUser()) },
       isLoggedIn: true,
       dataLoaded: false,
+      isAdmin: false,
     }
   : {
       entities: null,
@@ -22,6 +23,7 @@ const initialState = localStorageService.getAccessToken()
       auth: null,
       isLoggedIn: false,
       dataLoaded: false,
+      isAdmin: false,
     };
 
 const usersSlice = createSlice({
@@ -42,6 +44,8 @@ const usersSlice = createSlice({
     },
     authRequestSuccess: (state, action) => {
       state.auth = action.payload;
+      console.log("action.payload ", action.payload);
+      state.isAdmin = action.payload.role === "ADMIN";
       state.isLoggedIn = true;
     },
     authRequestFailed: (state, action) => {
@@ -64,6 +68,12 @@ const usersSlice = createSlice({
     authRequested: (state) => {
       state.error = null;
     },
+    authReceived(state, action) {
+      state.auth = action.payload;
+      state.isAdmin = action.payload.role.includes( "ADMIN" );
+      state.isLoggedIn = true;
+      state.isLoading = false;
+    },
   },
 });
 
@@ -71,30 +81,34 @@ const { reducer: usersReducer, actions } = usersSlice;
 const {
   usersRequested,
   usersReceved,
+  userCreated,
   usersRequestFiled,
   authRequestFailed,
   authRequestSuccess,
-  userCreated,
   userLoggedOut,
   userUpdateSuccessed,
+  authReceived,
 } = actions;
 
 const authRequested = createAction("users/authRequested");
-const userCreateRequested = createAction("users/userCreateRequested");
-const createUserFailed = createAction("users/createUserFailed ");
+
 const userUpdateFailed = createAction("users/userUpdateFailed");
 const userUpdateRequested = createAction("users/userUpdateRequested");
 
 export const login =
   ({ payload, redirect }) =>
   async (dispatch) => {
+  console.log('payload,redirect: ',payload,redirect)
     const { email, password } = payload;
     dispatch(authRequested());
     try {
       const data = await authService.login({ email, password });
-      dispatch(authRequestSuccess({ userId: data.localId }));
+      const { accessToken } = data;
+      const user = jwt_decode(accessToken);
       localStorageService.setTokens(data);
-      history.push(redirect);
+      localStorageService.setUser(user)
+      dispatch(authRequestSuccess(user));
+      history.push("/");
     } catch (error) {
       const { code, message } = error.response.data.error;
       if (code === 400) {
@@ -106,49 +120,30 @@ export const login =
     }
   };
 
-export const signUp =
-  ({ email, password, ...rest }) =>
-  async (dispatch) => {
-    dispatch(authRequested());
-    try {
-      const data = await authService.register({ email, password });
-      localStorageService.setTokens(data);
-      dispatch(authRequestSuccess({ userId: data.localId }));
-      dispatch(
-        createUser({
-          _id: data.localId,
-          email,
-          rate: getRandomInt(1, 5),
-          completedMeetings: getRandomInt(0, 200),
-          image: `https://avatars.dicebear.com/api/avataaars/${(
-            Math.random() + 1
-          )
-            .toString(36)
-            .substring(7)}.svg`,
-          ...rest,
-        })
-      );
-    } catch (error) {
-      dispatch(authRequestFailed(error.message));
-    }
-  };
+export const signUp = (payload) => async (dispatch) => {
+  dispatch(authRequested());
+  try {
+    const data = await authService.register(payload);
+    console.log('signUp dta response ', data)
+    const {accessToken}=data
+    const user = jwt_decode(accessToken)
+    console.log('user in sign up ', user)
+    localStorageService.setTokens(data);
+    localStorageService.setUser(user)
+
+    dispatch(authReceived(user));
+    history.push("rooms/");
+  } catch (error) {
+    dispatch(authRequestFailed(error.message));
+  }
+};
+
 export const logOut = () => (dispatch) => {
   localStorageService.removeAuthData();
   dispatch(userLoggedOut());
   history.push("/");
 };
-function createUser(payload) {
-  return async function (dispatch) {
-    dispatch(userCreateRequested());
-    try {
-      const { content } = await userService.create(payload);
-      dispatch(userCreated(content));
-      history.push("/main");
-    } catch (error) {
-      dispatch(createUserFailed(error.message));
-    }
-  };
-}
+
 export const loadUsersList = () => async (dispatch) => {
   dispatch(usersRequested());
   try {
@@ -172,7 +167,7 @@ export const updateUser = (payload) => async (dispatch) => {
 export const getUsersList = () => (state) => state.users.entities;
 export const getCurrentUserData = () => (state) => {
   return state.users.entities
-    ? state.users.entities.find((u) => u._id === state.users.auth.userId)
+    ? state.users.entities.find((u) => u._id === state.users.auth._id)
     : null;
 };
 export const getUserById = (userId) => (state) => {
@@ -182,6 +177,7 @@ export const getUserById = (userId) => (state) => {
 };
 
 export const getIsLoggedIn = () => (state) => state.users.isLoggedIn;
+export const getIsAdmin = () => (state) => state.users.auth?.role.includes('ADMIN');
 export const getDataStatus = () => (state) => state.users.dataLoaded;
 export const getUsersLoadingStatus = () => (state) => state.users.isLoading;
 export const getCurrentUserId = () => (state) => state.users.auth.userId;

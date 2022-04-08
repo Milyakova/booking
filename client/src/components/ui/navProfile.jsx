@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getCurrentUserData } from "../store/users";
+
 const NavProfile = () => {
   const currentUser = useSelector(getCurrentUserData());
   const [isOpen, setOpen] = useState(false);
@@ -22,7 +23,7 @@ const NavProfile = () => {
         />
       </div>
       <div className={"w-100 dropdown-menu" + (isOpen ? " show" : "")}>
-        <Link to={`/${currentUser._id}`} className="dropdown-item">
+        <Link to={`/users/${currentUser._id}`} className="dropdown-item">
           My Rooms
         </Link>
         <Link to="/logout" className="dropdown-item">

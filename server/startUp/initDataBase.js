@@ -2,13 +2,14 @@
 
 const Category= require("../models/Category")
 const Quality= require("../models/Quality")
+// const Room=require('../models/Room')
 
 const categoriesMock=require('../mock/categories.json')
 const qualitiesMock=require('../mock/qualities.json')
+// const roomsMock=require('../mock/rooms.json')
 
 module.exports=async()=> {
     const categories= await Category.find()
-    console.log(categories)
     if (categories.length!==categoriesMock.length){
         await createInitialEntity(Category,categoriesMock)
     }
@@ -17,6 +18,10 @@ module.exports=async()=> {
     if (qualities.length!==qualitiesMock.length){
         await createInitialEntity(Quality,qualitiesMock)
     }
+    // const rooms= await Room.find()
+    // if (rooms.length!==roomsMock.length){
+    //     await createInitialEntity(Room,roomsMock)
+    // }
 }
 
 async function createInitialEntity(Model, data){

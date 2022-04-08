@@ -9,11 +9,11 @@ export function validator(data, config) {
         } else {
           if (Array.isArray(data)) {
             statusValidate = !data.length();
-          } else {
-            statusValidate = data.trim() === "";
+          }else{
+          statusValidate = data.toString().trim() === "";
           }
         }
-        break;
+        break
       }
 
       case "isEmail":

@@ -29,10 +29,9 @@ const Slider = ({ autoscroll, interval }) => {
     return () => {
       if (timerId.current) clearTimeout(timerId.current);
     };
-  }, []);
+  });
 
   const timer = () => {
-    console.log("timer");
     nextHandler();
     if (timerId.current) clearTimeout(timerId.current);
     timerId.current = setTimeout(timer, interval);
@@ -40,7 +39,6 @@ const Slider = ({ autoscroll, interval }) => {
 
   const restartTimer = () => {
     if (autoscroll) {
-      console.log("restartTimer", timerId.current);
       if (timerId.current) clearTimeout(timerId.current);
       timerId.current = setTimeout(timer, interval);
     }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import api from "../../../API";
-import EditForm from "../../ui/editForm";
+// import EditForm from "../../ui/editForm";
 
 const EditPage = ({ userId }) => {
   const [user, setUser] = useState();
@@ -10,7 +10,8 @@ const EditPage = ({ userId }) => {
   }, []);
 
   if (user) {
-    return <EditForm user={user} />;
+    // return <EditForm user={user} />;
+    return <p> EditForm</p>
   }
   return (
     <div className="spinner-border m-5" role="status">

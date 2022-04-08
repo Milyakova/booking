@@ -3,6 +3,7 @@ import categoriesReducer from "./categories";
 import qualitiesReducer from "./qualities";
 import usersReducer from "./users";
 import roomsReducer from "./rooms";
+import bookingsReducer from "./bookings";
 
 const { combineReducers, configureStore } = require("@reduxjs/toolkit");
 
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   rooms: roomsReducer,
   users: usersReducer,
   comments: commentsReducer,
+  bookings: bookingsReducer
 });
 
 export function createStore() {

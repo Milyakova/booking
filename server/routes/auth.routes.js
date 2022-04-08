@@ -1,24 +1,24 @@
 const express=require('express')
 const router=express.Router({mergeParams:true})
-const User = require("../models/User");
-const bcrypt=require("bcryptjs")
+const User=require('../models/User')
+const Role=require('../models/Role')
+const authMiddleware=require("../middleware/auth.middleware")
+const {check, validationResult} = require("express-validator");
+const bcrypt = require("bcryptjs");
 const {generateUserData} = require("../utils/helpers");
-const tokenService=require("../services/token.service")
-const {check,validationResult}=require("express-validator")
-const {normalizeEmail} = require("validator");
+const tokenService = require("../services/token.service");
 
-// /api/auth/signUp
-// 1. get data from req (email, password)
-// 2. check if user already exists
-// 3.hash password
-// 4. create user
-// 5. generate tokens (jvd, refresh)
+// /api/auth/registration
+// /api/auth/login
+// /api/auth/auth
 
-router.post('/signUp',  [
+router.post('/registration',  [
+
     check('email',"Некорректный email").isEmail(),
     check('password',"Минимальная длина пароля 8 символов").isLength({min:8}),
 
     async(req,res)=>{
+        console.log('server working with registration request')
         const {email, password}=req.body
         try{
             const errors=validationResult(req)
@@ -47,23 +47,21 @@ router.post('/signUp',  [
         }
 
         const hashedPassword=await bcrypt.hash(password, 12)
+        const userRole=await Role.findOne({value:'USER'})
         const newUser=await User.create({
             ...generateUserData(),
             ...req.body,
             password: hashedPassword,
+            roles:[userRole.value]
 
         })
-        const tokens=tokenService.generate({_id:newUser._id})
+        const tokens=tokenService.generate({_id:newUser._id, role:newUser.roles})
         await tokenService.save(newUser._id, tokens.refreshToken)
         res.status(201).send({...tokens, userId:newUser._id})
     }
 ])
-// 1. validate
-// 2. find user
-// 3. compare hashed passwords
-// 4. generate token (refresh, access)
-// 5. return data
-router.post('/signInWithPassword', [
+
+router.post('/login', [
     check('email','Email некорректный' ).normalizeEmail().isEmail(),
     check('password','Пароль не может быть пустым').exists(),
 
@@ -100,7 +98,13 @@ router.post('/signInWithPassword', [
                     }
                 })
             }
-            const tokens=tokenService.generate({_id:existingUser._id})
+            // if (existingUser.roles === 'ADMIN') {
+            //     const token = generateAccessToken(existingUser._id, existingUser.roles, existingUser.email)
+            //     return res.json({ token })
+            // }
+            console.log('existing user ', existingUser)
+            const tokens=tokenService.generate({_id:existingUser._id, role:existingUser.roles, name:existingUser.name,email:existingUser.email})
+            console.log('tokens ', tokens)
             await tokenService.save(existingUser._id,tokens.refreshToken)
             res.status(200).send({...tokens, userId:existingUser._id})
         }catch (e) {
@@ -110,12 +114,10 @@ router.post('/signInWithPassword', [
         }
 
     }])
-
 function isTokenInvalid(data, dbToken){
     return !data || !dbToken || data._id!==dbToken?.user?.toString()
 }
-
-router.post('/token', async(req,res)=>{
+router.get('/token', authMiddleware, async (req,res)=>{
     try{
         const {refresh_token:refreshToken}=req.body
         const data=tokenService.validateRefresh(refreshToken)
@@ -134,5 +136,35 @@ router.post('/token', async(req,res)=>{
         })
     }
 })
+
+// router.patch('/:userId',auth, async(req,res)=>{
+//     try{
+//         const {userId}=req.params
+//         if (userId===req.user._id){
+//             const updatedUser=await User.findByIdAndUpdate(userId,req.body, {new:true})
+//             res.send(updatedUser)
+//         }else{
+//             res.status((401).json({
+//                 message:"Unathorized"
+//             }))
+//         }
+//     }catch (e) {
+//         res.status(500).json({
+//             message:'На сервере произошла ошибка. Попробуйте позже'
+//         })
+//     }
+// })
+// router.get('/',async (req,res)=>{
+//     try{
+//
+//         res.json('server work')
+//         const list=await User.find()
+//         res.status(200).send(list)//отправляем на фронтенд лист.200 статус по умолчанию:res.send()
+//     }catch(e){
+//         res.status(500).json({
+//             message:'На сервере произошла ошибка. Попробуйте позже'
+//         })
+//     }
+// })
 
 module.exports=router

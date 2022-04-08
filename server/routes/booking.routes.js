@@ -1,6 +1,7 @@
 const express=require('express')
 const router=express.Router({mergeParams:true})
-const auth=require("../middleware/auth.middleware")
+const authMiddleware=require("../middleware/auth.middleware")
+const roleMiddleware=require("../middleware/role.middleware")
 const Booking=require("../models/Booking")
 
 // /api/booking  - бронь, дальше вариативно get или post
@@ -16,7 +17,7 @@ router
             })
         }
     })
-    .post(auth, async(req,res)=>{
+    .post(authMiddleware, async(req,res)=>{
         try{
             const newBooking= await Booking.create({
                 ...req.body,
@@ -30,7 +31,7 @@ router
         }
     })
 
-router.delete('/:bookingId',auth,async (req,res)=>{
+router.delete('/:bookingId',roleMiddleware('ADMIN'),async (req,res)=>{
     try{
         const {bookingId}=req.params
         const removedBooking= await Booking.findById(bookingId)

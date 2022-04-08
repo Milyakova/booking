@@ -1,0 +1,355 @@
+[
+  {
+    "_id": "8XQ8ZLkVbE48DLWx3g4SsYKZZXsSLQSQM",
+    "name": "Эконом 2+1",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "number": 101,
+    "category": "67rdca3eeb7f6fgeed471818",
+    "guests_count": 2,
+    "guests_additionally": 1,
+    "price": 1700,
+    "qualities": ["qualities.wifi", "qualities.WConTheFloor"],
+    "rate": 2.5,
+    "bookmark": false,
+    "bookings": []
+  },
+  {
+    "_id": "AYtMENXsd6GWAkBkNjmTZYZbxe4ELXejT",
+    "name": "Эконом 3+1",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "number": 102,
+    "category": "67rdca3eeb7f6fgeed471818",
+    "guests_count": 3,
+    "guests_additionally": 1,
+    "price": 2000,
+    "qualities": ["67rdca3eeb7f6fgeed471103", "67rdca3eeb7f6fgeed471187"],
+    "rate": 2.4,
+    "bookmark": false,
+    "bookings": []
+  },
+  {
+    "_id": "H2CUEaKJM97FK4voPkuG7zBLwk9C8M8jB",
+    "name": "Эконом 4+1",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "number": 103,
+    "category": "67rdca3eeb7f6fgeed471818",
+    "guests_count": 4,
+    "guests_additionally": 1,
+    "price": 2300,
+    "qualities": ["67rdca3eeb7f6fgeed471103", "67rdca3eeb7f6fgeed471187"],
+    "rate": 2.4,
+    "bookmark": false,
+    "bookings": []
+  },
+  {
+    "_id": "JM6p9Wyq4CvkcKEWAX3uhbFAnyinokLBQ",
+    "name": "Эконом 6+2",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "number": 104,
+    "category": "67rdca3eeb7f6fgeed471818",
+    "guests_count": 6,
+    "guests_additionally": 2,
+    "price": 3000,
+    "qualities": ["67rdca3eeb7f6fgeed471103", "67rdca3eeb7f6fgeed471187"],
+    "rate": 2.4,
+    "bookmark": false,
+    "bookings":  []
+  },
+  {
+    "_id": "EsoaJyQM5joQci9QN24nTffmsCSBQG8Vt",
+    "name": "Комфорт 2+1",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "number": 201,
+    "category": "67rdca3eeb7f6fgeed471820",
+    "guests_count": 2,
+    "guests_additionally": 1,
+    "price": 3000,
+    "qualities": [
+      "67rdca3eeb7f6fgeed471103",
+      "67rdca3eeb7f6fgeed471102",
+      "67rdca3eeb7f6fgeed4711012",
+      "67rdca3eeb7f6fgeed471198",
+      "67rdca3eeb7f6fgeed471100"
+    ],
+    "rate": 2.4,
+    "bookmark": false,
+    "bookings": []
+  },
+  {
+    "_id": "HZmARcwX69mnrVSRSg3UCq5Ey4qabcps7",
+    "name": "Комфорт 2+2",
+    "number": 202,
+    "category": "67rdca3eeb7f6fgeed471820",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "guests_count": 2,
+    "guests_additionally": 2,
+    "price": 3000,
+    "qualities": [
+      "67rdca3eeb7f6fgeed471103",
+      "67rdca3eeb7f6fgeed471102",
+      "67rdca3eeb7f6fgeed4711012",
+      "67rdca3eeb7f6fgeed471198",
+      "67rdca3eeb7f6fgeed471100"
+    ],
+    "rate": 4.4,
+    "bookmark": false,
+    "bookings": []
+  },
+  {
+    "_id": "3TR2vT6znNsmcPbBvCWck43n8Cv3WXjc2",
+    "name": "Комфорт 4+2",
+    "number": 203,
+    "category": "67rdca3eeb7f6fgeed471820",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "guests_count": 4,
+    "guests_additionally": 2,
+    "price": 3000,
+    "qualities": [
+      "67rdca3eeb7f6fgeed471103",
+      "67rdca3eeb7f6fgeed471102",
+      "67rdca3eeb7f6fgeed4711012",
+      "67rdca3eeb7f6fgeed471198",
+      "67rdca3eeb7f6fgeed471100"
+    ],
+    "rate": 4.6,
+    "bookmark": false,
+    "bookings": []
+  },
+  {
+    "_id": "7H9d39ryTmFTU22gCjWG3UzJDb4SWtRUv",
+    "name": "Люкс 2+1",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "number": 301,
+    "category": "67rdca3eeb7f6fgeed471814",
+    "guests_count": 2,
+    "guests_additionally": 1,
+    "price": 3000,
+    "qualities": [
+      "67rdca3eeb7f6fgeed471103",
+      "67rdca3eeb7f6fgeed471102",
+      "67rdca3eeb7f6fgeed4711012",
+      "67rdca3eeb7f6fgeed471198",
+      "67rdca3eeb7f6fgeed471100",
+      "67rdca3eeb7f6fgeed471101"
+    ],
+    "rate": 4.6,
+    "bookmark": false,
+    "bookings": []
+  },
+  {
+    "_id": "BmPJvkvvkF1obebSqSiuvff7RhEGiu6oV",
+    "name": "Люкс 4+2",
+    "number": 302,
+    "category": "67rdca3eeb7f6fgeed471814",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "guests_count": 4,
+    "guests_additionally": 2,
+    "price": 3000,
+    "qualities": [
+      "67rdca3eeb7f6fgeed471103",
+      "67rdca3eeb7f6fgeed471102",
+      "67rdca3eeb7f6fgeed4711012",
+      "67rdca3eeb7f6fgeed471198",
+      "67rdca3eeb7f6fgeed471100",
+      "67rdca3eeb7f6fgeed471101"
+    ],
+    "rate": 4.6,
+    "bookmark": false,
+    "bookings": []
+  },
+  {
+    "_id": "17ptfzR1rT6u36sY36uicetJbt5ubRGncU",
+    "name": "Люкс 2+1",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "number": 303,
+    "category": "67rdca3eeb7f6fgeed471814",
+    "guests_count": 2,
+    "guests_additionally": 1,
+    "price": 3000,
+    "qualities": [
+      "67rdca3eeb7f6fgeed471103",
+      "67rdca3eeb7f6fgeed471102",
+      "67rdca3eeb7f6fgeed4711012",
+      "67rdca3eeb7f6fgeed471198",
+      "67rdca3eeb7f6fgeed471100",
+      "67rdca3eeb7f6fgeed471101"
+    ],
+    "rate": 4.6,
+    "bookmark": false,
+    "bookings": []
+  },
+  {
+    "_id": "1835mvPJg73Gdji7Y8twXwddtK5crw5Zxf",
+    "name": "Люкс 4+2",
+    "number": 304,
+    "category": "67rdca3eeb7f6fgeed471814",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "guests_count": 4,
+    "guests_additionally": 2,
+    "price": 3000,
+    "qualities": [
+      "67rdca3eeb7f6fgeed471103",
+      "67rdca3eeb7f6fgeed471102",
+      "67rdca3eeb7f6fgeed4711012",
+      "67rdca3eeb7f6fgeed471198",
+      "67rdca3eeb7f6fgeed471100",
+      "67rdca3eeb7f6fgeed471101"
+    ],
+    "rate": 4.6,
+    "bookmark": false,
+    "bookings": []
+  },
+  {
+    "_id": "17nQyAhq28oFoizjZreFxzDNkhMVWdcwAa",
+    "name": "Люкс 2+1",
+    "number": 304,
+    "category": "67rdca3eeb7f6fgeed471814",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "guests_count": 2,
+    "guests_additionally": 1,
+    "price": 3000,
+    "qualities": [
+      "67rdca3eeb7f6fgeed471103",
+      "67rdca3eeb7f6fgeed471102",
+      "67rdca3eeb7f6fgeed4711012",
+      "67rdca3eeb7f6fgeed471198",
+      "67rdca3eeb7f6fgeed471100",
+      "67rdca3eeb7f6fgeed471101"
+    ],
+    "rate": 4.6,
+    "bookmark": false,
+    "bookings": []
+  },
+  {
+    "_id": "23nQyAhq28oFoizjZreFxzWdcwAa",
+    "name": "Коттедж 'Романтик'",
+    "number": 1,
+    "category": "67rdca3eeb7f6fgeed471822",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "guests_count": 2,
+    "guests_additionally": 2,
+    "price": 10000,
+    "qualities": [
+      "67rdca3eeb7f6fgeed471103",
+      "67rdca3eeb7f6fgeed471102",
+      "67rdca3eeb7f6fgeed4711012",
+      "67rdca3eeb7f6fgeed471198",
+      "67rdca3eeb7f6fgeed471100",
+      "67rdca3eeb7f6fgeed471734",
+      "67rdca3eeb7f6fgeed471831",
+      "67rdca3eeb7f6fgeed471798"
+    ],
+    "rate": 5.0,
+    "bookmark": false,
+    "bookings": []
+  },
+  {
+    "_id": "45nQyAhq28oFoizjZreFxdcwAa",
+    "name": "Коттедж 'Дом лесника'",
+    "number": 2,
+    "category": "67rdca3eeb7f6fgeed471822",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "guests_count": 6,
+    "guests_additionally": 2,
+    "price": 12000,
+    "qualities": [
+      "67rdca3eeb7f6fgeed471103",
+      "67rdca3eeb7f6fgeed471102",
+      "67rdca3eeb7f6fgeed4711012",
+      "67rdca3eeb7f6fgeed471198",
+      "67rdca3eeb7f6fgeed471100",
+      "67rdca3eeb7f6fgeed471734",
+      "67rdca3eeb7f6fgeed471831"
+    ],
+    "rate": 4.9,
+    "bookmark": false,
+    "bookings": []
+  },
+  {
+    "_id": "78nQyAhq28oFoizVWdcwAa",
+    "name": "Коттедж 'Дом рыболова'",
+    "number": 3,
+    "category": "67rdca3eeb7f6fgeed471822",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "guests_count": 10,
+    "guests_additionally": 4,
+    "price": 16000,
+    "qualities": [
+      "67rdca3eeb7f6fgeed471103",
+      "67rdca3eeb7f6fgeed471102",
+      "67rdca3eeb7f6fgeed4711012",
+      "67rdca3eeb7f6fgeed471198",
+      "67rdca3eeb7f6fgeed471100",
+      "67rdca3eeb7f6fgeed471546",
+      "67rdca3eeb7f6fgeed471734",
+      "67rdca3eeb7f6fgeed471831"
+    ],
+    "rate": 5.0,
+    "bookmark": false,
+    "bookings": []
+  },
+  {
+    "_id": "21nQyAhq28oFoicwAa",
+    "name": "Коттедж 'Домик охотника'",
+    "number": 4,
+    "category": "67rdca3eeb7f6fgeed471822",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "guests_count": 18,
+    "guests_additionally": 4,
+    "price": 24000,
+    "qualities": [
+      "67rdca3eeb7f6fgeed471103",
+      "67rdca3eeb7f6fgeed471102",
+      "67rdca3eeb7f6fgeed4711012",
+      "67rdca3eeb7f6fgeed471198",
+      "67rdca3eeb7f6fgeed471100",
+      "67rdca3eeb7f6fgeed471546",
+      "67rdca3eeb7f6fgeed471734",
+      "67rdca3eeb7f6fgeed471831"
+    ],
+    "rate": 4.6,
+    "bookmark": false,
+    "bookings": []
+  },
+  {
+    "_id": "93nQyAhhMVWdcwAa",
+    "name": "Коттедж 'Хвойная бочка'",
+    "number": 5,
+    "category": "67rdca3eeb7f6fgeed471822",
+    "photo":
+    "https://images.pexels.com/photos/6394711/pexels-photo-6394711.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+    "guests_count": 24,
+    "guests_additionally": 6,
+    "price": 36000,
+    "qualities": [
+      "67rdca3eeb7f6fgeed471103",
+      "67rdca3eeb7f6fgeed471102",
+      "67rdca3eeb7f6fgeed4711012",
+      "67rdca3eeb7f6fgeed471198",
+      "67rdca3eeb7f6fgeed471100",
+      "67rdca3eeb7f6fgeed471546",
+      "67rdca3eeb7f6fgeed471734",
+      "67rdca3eeb7f6fgeed471831",
+      "67rdca3eeb7f6fgeed471798"
+    ],
+    "rate": 4.6,
+    "bookmark": false,
+    "bookings": []
+  }
+]

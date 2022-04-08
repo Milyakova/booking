@@ -5,23 +5,26 @@ import NavBar from "./components/ui/NavBar";
 import Main from "./layouts/main";
 import Login from "./layouts/login";
 import LogOut from "./layouts/logout";
-// import Users from "../layouts/users";
+import Users from "./layouts/users"
 import Rooms from "./layouts/rooms";
 import NotFound from "./components/ui/notFound";
 import AppLoader from "./components/ui/hoc/appLoader";
-// import ProtectedRoute from "./components/common/protectedRoute";
+import ProtectedRoute from "./components/common/protectedRoute";
+import AdminPage from "./components/pages/adminPage";
 
 function App() {
   return (
     <>
       <AppLoader>
         <NavBar />
+
         <Switch>
           <Route path="/" exact component={Main} />
           <Route path="/login/:type?" component={Login} />
           <Route path="/logout" component={LogOut} />
           <Route path="/rooms/:roomId?" component={Rooms} />
-          {/* <ProtectedRoute path="/userId/:edit?" component={UsersRooms} /> */}
+          <ProtectedRoute path="/users/:userId?/:edit?" component={Users} />
+          <ProtectedRoute path="/admin" component={AdminPage}/>
           <Redirect from="/main" to="/" />
           <Route path="/404" component={NotFound} />
           <Redirect to="/404" />

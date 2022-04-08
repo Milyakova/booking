@@ -1,79 +1,103 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import QualitiesList from "../../ui/qualities";
-// import API from "../../../API";
-import CommentForm from "../../ui/commentForm";
-import Comments from "../../ui/comments";
+import Comments from "../../ui/comments"
 import Loader from "../../../utils/loader";
-
+import {Link, useParams} from "react-router-dom";
+import BookingForm from "../../ui/bookingForm"
 import { useSelector } from "react-redux";
 import { getRoomById } from "../../store/rooms";
+import {getIsLoggedIn} from "../../store/users";
+import history from "../../../utils/history";
+import RegisterForm from "../../ui/registerForm";
+import LoginForm from "../../ui/loginForm";
+
 
 const RoomPage = ({ roomId }) => {
+    const [showForm, setForm] = useState(false)
+    const toggleForm = (params) => {
+        setForm((prevState) =>
+            prevState === true ? false : true
+        );
+    };
+
   const room = useSelector(getRoomById(roomId));
-  // const [room, setRoom] = useState();
-  // const [rooms, setRooms] = useState();
-  // const [comments, setComments] = useState();
+  const isLoggedIn=useSelector(getIsLoggedIn())
+  const handleClick=()=>{
+       if (isLoggedIn ){
+           toggleForm()
+       } else{
+           history.push("/login")
+       }
+  }
+  useEffect(()=>{},[showForm])
 
-  // useEffect(() => {
-  //   API.rooms.getById(roomId).then((room) => {
-  //     console.log("room IN roomPAGE,", room);
-  //     setRoom(room);
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   API.rooms.fetchAll().then((data) => {
-  //     setRooms(data);
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   API.comments.fetchCommentsForRoom(roomId).then((data) => {
-  //     setComments(data);
-  //   });
-  // }, []);
-
-  // const addComment = (comment) => {
-  //   API.comments.add(comment);
-  //   API.comments.fetchCommentsForroom(roomId).then((data) => setComments(data));
-  // };
-  // const removeComment = (id) => {
-  //   API.comments.remove(id);
-  //   API.comments.fetchCommentsForroom(roomId).then((data) => setComments(data));
-  // };
-  // console.log("COMMENTSFORroom", comments);
   if (room) {
     return (
       <>
-        <div class="card mb-3">
-          <img src="..." class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Номер {room.name}</h5>
-            <p class="card-text">
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </p>
-            <span className="ms-2">{room.rate}</span>
-            <p class="card-text">
-              <small class="text-muted">Last updated 3 mins ago</small>
-            </p>
+          <div className="container-md">
+              <div className="row gutters-sm">
+                  <div className="col-md-6 mb-3">
+                      <img src={room.photo} className="card-img-top" alt="..." />
+                  </div>
+                  <div className="col-md-6 ">
+                      <div className="card mb-3 ">
+                          <h5 className="card-title m-3">Номер {room.name}</h5>
+                          <p className="card-text m-3">
+                              Преимуществом этого номера является увеличенная до 20 м2 площадь. Во всех номерах белоснежные халаты и тапочки бесплатно и по умолчанию.
+                              Интерьер выполнен в приятных цветах и оттенках с элементами скандинавского стиля, а за счет больших окон в номерах много света.
+                          </p>
+                          <p className="card-text">
+                              <ul>
+                                  <li>Количество проживающих: {room.guests_count}</li>
+                                  <li>Дополнительные места: {room.guests_additionally}</li>
+                              </ul>
+                          </p>
+                      </div>
+                      <div className="card mb-3">
+                          <div className=" card-body d-flex flex-column justify-content-center text-center ">
+                              <p className="card-text">
+                                  <QualitiesList ids={room.qualities} />
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <button className="btn btn-success btn-lg mb-3" onClick={handleClick}>{showForm?`Назад`:`Забронировать`}</button>
+              {showForm&&<BookingForm/>}
+
+              {/*{formType === "register" ? (*/}
+              {/*    <>*/}
+              {/*        <h3 className="mb-4">Registration</h3>*/}
+              {/*        <RegisterForm />*/}
+              {/*        <p>*/}
+              {/*            Already have account?{" "}*/}
+              {/*            <a role="button" onClick={toggleFormType}>*/}
+              {/*                Sign in*/}
+              {/*            </a>*/}
+              {/*        </p>*/}
+              {/*    </>*/}
+              {/*) : (*/}
+              {/*    <>*/}
+              {/*        <h3 className="mb-4">Login</h3>*/}
+              {/*        <LoginForm />*/}
+              {/*        <p>*/}
+              {/*            Dont have account?*/}
+              {/*            <a role="button" onClick={toggleFormType}>*/}
+              {/*                Registration*/}
+              {/*            </a>*/}
+              {/*        </p>*/}
+              {/*    </>*/}
+              {/*)}*/}
+
+              <div className="col-md-8">
+                  <Comments />
+              </div>
           </div>
-        </div>
-        <div className="card mb-3">
-          <div className=" card-body d-flex flex-column justify-content-center text-center ">
-            <h5 className="card-title">
-              <span>Qualities</span>
-            </h5>
-            <p className="card-text">
-              <QualitiesList qualities={room.qualities} />
-            </p>
-          </div>
-        </div>
-        <div className="col-md-8">
-          <Comments />
-        </div>
+
+
+
         {/* <div className="col-md-8">
           Комментарии
           {rooms ? (
